@@ -22,9 +22,5 @@ source venv/bin/activate
 
 ## Generate requirements.txt use uv
 ````bash
-uv sync --no-dev
-````
-
-````bash
-uv pip freeze > requirements.txt
+uv export --format requirements-txt > requirements.txt
 ````
