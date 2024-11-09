@@ -43,6 +43,9 @@ jobs:
       with:
         enable-cache: true
 
+    - name: Create virtualenv
+      run: uv venv
+
     - name: Install the project
       run: uv pip install -r requirements.txt
 
