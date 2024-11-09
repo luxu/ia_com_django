@@ -24,3 +24,31 @@ source venv/bin/activate
 ````bash
 uv export --format requirements-txt > requirements.txt
 ````
+
+## Update lib
+````bash
+uv lock --upgrade
+````
+
+## Run commands with uv
+````bash
+uv run django-admin startproject <project-name> .
+uv run manage.py runserver
+````
+
+## Run commands with uv
+````bash
+
+````
+After all the dependencies are specified in `pyproject.toml` 
+you can run `uv sync` to make sure everything is installed in your environment.
+
+## Adding dev dependencies
+````bash
+uv add --dev pytest pytest-django
+````
+
+## Not to install dev dependencies in production
+````bash
+uv sync --no-dev --locked
+````
