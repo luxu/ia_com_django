@@ -49,12 +49,6 @@ jobs:
     - name: Install the project
       run: uv pip install -r requirements.txt
 
-    - name: Run migrations
-      env:
-        DATABASE_URL: "postgres://testuser:testpass@localhost:5432/testdb"
-      run: |
-        uv python manage.py migrate
-
     - name: Run Tests
       run: |
         uv run pytest tests
