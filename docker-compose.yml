@@ -1,21 +1,40 @@
 version: '3'
 services:
-  web:
-    images: nginx:alpine
+  nginx:
+    image: nginx
     ports:
-      - "8080:8080"
+      - 80:80
     volumes:
-      - web-data:/usr/share/nginx/html
+      - ./nginx/proxy.conf:/etc/nginx/conf.d/default.conf
+      - ./staticfiles:/app/staticfiles
+    depends_on:
+      - app
 
-  db:
-    image: postgres:13
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+  app:
+    build: .
+    image: iacomdjango-rest:dev
+    env_file: .env
+    depends_on:
+      - postgres
+    # command: wait-for-it postgres:5432 -- python manage.py runserver 0.0.0.0:8000
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - .:/app
+
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: iacomdjango-rest
+    # healthcheck:
+    #   test: pg_isready -U devpro-rest
+    #   interval: 2s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 3s
 
 volumes:
-  web-data:
-  db-data:
+  postgres:
