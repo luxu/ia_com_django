@@ -21,8 +21,5 @@ jobs:
     - name: Install dependencies
       run: uv sync --locked
 
-    - name: Collect static files
-      run: uv run python manage.py collectstatic
-
     - name: Run Tests
       run: uv run pytest
