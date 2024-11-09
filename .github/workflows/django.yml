@@ -18,6 +18,7 @@ jobs:
       with:
         enable-cache: true
         version: "latest"
+
     - name: Install dependencies
       run: uv sync --locked
 

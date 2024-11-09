@@ -4,13 +4,21 @@ FROM python:3.12-slim
 # Defina o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copie o arquivo de código para o container
-COPY app.py .
+RUN apt update -y \
+    && apt install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    wait-for-it \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Instale as dependências necessárias (se houver)
-# RUN pip install -r requirements.txt
+COPY requirements.txt .
 
-# Defina o comando de execução da aplicação
-CMD ["python", "app.py"]
+RUN pip install -U pip && \
+    pip install --no-cache-dir -r requirements.txt
 
+COPY . .
 
+EXPOSE 8000
+
+CMD [ "gunicorn", "--bind", ":8000", "kernel.wsgi" ]
