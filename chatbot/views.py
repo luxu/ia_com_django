@@ -32,6 +32,7 @@ def ask_ai(context, message):
         (
             'system',
             'Você é um assistente responsável por tirar dúvidas sobre programação Python.'
+            'Sempre traga o código em python bem detalhado e explicado'
             'Responda em formato markdown.',
         ),
     ]
