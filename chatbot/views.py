@@ -7,6 +7,8 @@ from markdown import markdown
 from chatbot.models import Chat
 from decouple import config
 
+from httpx import get
+
 
 def get_chat_history(chats):
     chat_history = []
@@ -23,7 +25,7 @@ def get_chat_history(chats):
 def ask_ai(context, message):
     try:
         model = ChatGroq(
-            model='llama-3.2-90b-vision-preview',
+            model=settings.MODEL,
             api_key=settings.GROQ_API_KEY,
         )
     except Exception as error:
@@ -50,6 +52,7 @@ def ask_ai(context, message):
 
 def chatbot(request):
     template_name = 'chatbot/chatbot.html'
+
     chats = Chat.objects.all()
 
     if request.method == 'POST':
@@ -73,7 +76,26 @@ def chatbot(request):
             'response': response
         }
         return JsonResponse(context)
-    context = {
-        'chats': chats
+    context = {'chats': chats}
+    return render(request, template_name, context)
+
+
+def list_models(request):
+    template_name = 'chatbot/list_models.html'
+    # api_key = os.environ.get("GROQ_API_KEY")
+
+    api_key = config("GROQ_API_KEY")
+
+    url = "https://api.groq.com/openai/v1/models"
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
     }
+    response = get(url, headers=headers)
+
+    context = {
+        'list_models': response.json()['data']
+    }
+
     return render(request, template_name, context)

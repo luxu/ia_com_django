@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load timestamp_filters %}
+
+{% block styles %}{% endblock styles %}
+
+{% block title %}Lista Models{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron my-4">
+            <a class="btn btn-primary" href="{% url 'chatbot' %}">Voltar para o chat</a>
+
+            <h3>Lista de Modelos by Groq</h3>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <th>ID</th>
+                        <th>Object</th>
+                        <th>Created</th>
+                        <th>Owned_by</th>
+                        <th>Active</th>
+                        <th>Context_window</th>
+                        <th>Public_apps</th>
+                        <th>Max_completion_tokens</th>
+                    </thead>
+                    <tbody>
+                        {% for model in list_models %}
+                        <tr>
+                            <td>{{ model.id }}</td>
+                            <td>{{ model.object }}</td>
+                            <td>{{ model.created|timestamp_to_date|date:"d/m/Y H:i" }}</td>
+                            <td>{{ model.owned_by }}</td>
+                            <td>{{ model.active }}</td>
+                            <td>{{ model.context_window }}</td>
+                            <td>{{ model.public_apps }}</td>
+                            <td>{{ model.max_completion_tokens }}</td>
+                        <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

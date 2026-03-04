@@ -12,7 +12,6 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-GROQ_API_KEY = config('GROQ_API_KEY')
 
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -103,3 +102,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GROQ_API_KEY = config('GROQ_API_KEY')
+MODEL = config('MODEL')
