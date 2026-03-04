@@ -1,8 +1,7 @@
 from pathlib import Path
 
-from decouple import config, Csv
+from decouple import Csv, config
 from dj_database_url import parse as db_url
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +27,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "chatbot",
+    'chatbot',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -64,16 +63,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kernel.wsgi.application'
 
-default_db_url = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
+default_db_url = 'sqlite:///' + str(BASE_DIR / 'db.sqlite3')
 DATABASES = {
-    "default": db_url(
-        config(
-            'DATABASE_URL',
-            default=default_db_url
-        ),
-        conn_max_age=600,
-        conn_health_checks=True
-    )
+    'default': db_url(config('DATABASE_URL', default=default_db_url), conn_max_age=600, conn_health_checks=True)
 }
 
 

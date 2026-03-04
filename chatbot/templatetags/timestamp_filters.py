@@ -1,5 +1,6 @@
-from django import template
 from datetime import datetime
+
+from django import template
 from django.utils import timezone
 
 register = template.Library()
@@ -9,5 +10,5 @@ register = template.Library()
 def timestamp_to_date(value):
     try:
         return datetime.fromtimestamp(int(value), tz=timezone.get_current_timezone())
-    except:
+    except Exception:
         return None
