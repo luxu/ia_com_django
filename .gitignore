@@ -12,3 +12,4 @@ wheels/
 .uv_cache
 db.sqlite3
 .env
+.coverage
